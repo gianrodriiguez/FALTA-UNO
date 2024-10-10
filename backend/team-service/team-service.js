@@ -7,7 +7,8 @@ app.use(cors());
 app.use(express.json());
 
 // Connect to MongoDB Atlas
-const mongoURI = "MONGO_URI=mongodb://mongo:27017/faltaUnoDB";
+const mongoURI = "mongodb://mongo:27017/faltaUnoDB";
+
 
 mongoose.connect(mongoURI)
   .then(() => console.log("Team Service: MongoDB connected"),{

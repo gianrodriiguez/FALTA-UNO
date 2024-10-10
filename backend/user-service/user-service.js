@@ -10,30 +10,8 @@ app.use(cors());  // Enable CORS
 app.use(express.json());
 
 // Connect to MongoDB Atlas
-const mongoURI = "MONGO_URI=mongodb://mongo:27017/faltaUnoDB";
+const mongoURI = "mongodb://mongo:27017/faltaUnoDB";
 
-// // Connect to MongoDB Atlas
-// mongoose.connect(mongoURI)
-//   .then(() => console.log("User Service: MongoDB connected"))
-//   .catch(err => console.log(err));
-
-// < - - - - - - - - - - - - - - - - - - - - 
-
-// const connectWithRetry = () => {
-//   console.log('MongoDB connection with retry');
-//   mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-//     .then(() => {
-//       console.log('MongoDB is connected');
-//     })
-//     .catch(err => {
-//       console.log('MongoDB connection unsuccessful, retry after 5 seconds. ', err);
-//       setTimeout(connectWithRetry, 5000);  // Retry every 5 seconds
-//     });
-// };
-
-// connectWithRetry();
-
-// < - - - - - - - - - - - - - - - - - - - - 
 
 mongoose.connect(process.env.MONGO_URI);
 
@@ -42,8 +20,6 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
 .then(() => console.log('Connected to MongoDB'))
 .catch((err) => console.error('MongoDB connection error:', err));
 
-
-  
 // Define a simple schema for players
 const PlayerSchema = new mongoose.Schema({
     name: String,
