@@ -5,16 +5,10 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+require('dotenv').config();  // Add this line at the top to load environment variables
 
-// Connect to MongoDB Atlas
-const mongoURI = "mongodb://mongo:27017/faltaUnoDB";
-
-
-mongoose.connect(mongoURI)
-  .then(() => console.log("Team Service: MongoDB connected"),{
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log("MongoDB connected"))
   .catch(err => console.log(err));
 
 // Define Team schema
@@ -43,5 +37,26 @@ app.get('/teams', async (req, res) => {
       res.status(500).send('Error fetching teams');
     }
   });  
+
+// app.get('/teams/:playerId', async (req, res) => {
+//   const { playerId } = req.params;
+//   try {
+//     const teams = await Team.find({ players: playerId });  // Find teams that contain the player's ID
+//     res.json(teams);
+//   } catch (error) {
+//     console.error('Error fetching teams:', error);
+//     res.status(500).send('Error fetching teams');
+//   }
+// });
+
+app.get('/teams/player/:playerId', async (req, res) => {
+  try {
+    const teams = await Team.find({ players: req.params.playerId });  // Assuming teams have player IDs
+    res.json(teams);
+  } catch (error) {
+    res.status(500).send('Error fetching teams');
+  }
+});
+
 
 app.listen(3002, () => console.log('Team Service running on port 3002'));

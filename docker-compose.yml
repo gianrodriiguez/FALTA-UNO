@@ -24,7 +24,16 @@ services:
     ports:
       - "3002:3002"
     environment:
-      - MONGO_URI=mongodb://mongo:27017/faltaUnoDB  # Use Docker MongoDB container name instead of localhost
+      - MONGO_URI=mongodb://mongo:27017/faltaUnoDB
+    depends_on:
+      - mongo
+
+  match-service:
+    build: ./backend/match-service
+    ports:
+      - "3003:3003"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/faltaUnoDB
     depends_on:
       - mongo
 

@@ -2,23 +2,18 @@ const express = require('express');
 const cors = require('cors');  // Import CORS
 const mongoose = require('mongoose');  // Import mongoose
 const app = express();
-
 const bodyParser = require('body-parser');
-app.use(bodyParser.json());
 
+require('dotenv').config();  // Get enviroment variables from .env file
+
+app.use(bodyParser.json());
 app.use(cors());  // Enable CORS
 app.use(express.json());
 
-// Connect to MongoDB Atlas
-const mongoURI = "mongodb://mongo:27017/faltaUnoDB";
 
-
-mongoose.connect(process.env.MONGO_URI);
-
-console.log("MongoDB URI:", process.env.MONGO_URI);
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-.then(() => console.log('Connected to MongoDB'))
-.catch((err) => console.error('MongoDB connection error:', err));
+  .then(() => console.log("MongoDB connected"))
+  .catch(err => console.log(err));
 
 // Define a simple schema for players
 const PlayerSchema = new mongoose.Schema({
